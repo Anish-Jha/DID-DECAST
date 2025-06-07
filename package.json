@@ -1,0 +1,27 @@
+{
+  "name": "did-decast",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@decentralized-identity/did-auth-jose": "^0.1.14",
+    "@stablelib/ed25519": "^2.0.2",
+    "axios": "^1.9.0",
+    "bootstrap": "^5.3.6",
+    "bs58": "^6.0.0",
+    "crypto-js": "^4.2.0",
+    "did-resolver": "^4.1.0",
+    "vue": "^3.5.13",
+    "vue3-toastify": "^0.2.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.3",
+    "vite": "^6.2.4",
+    "vite-plugin-vue-devtools": "^7.7.2"
+  }
+}
