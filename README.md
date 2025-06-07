@@ -65,7 +65,7 @@ did-decast-frontend/
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/your-username/did-decast-frontend.git
-   cd did-decast-frontend
+   cd did-decast
 
 ```sh
 npm install
