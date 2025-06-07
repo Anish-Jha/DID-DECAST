@@ -34,6 +34,7 @@ A Vue.js-based frontend for managing **Decentralized Identifiers (DIDs)** in the
 
 ## 📁 Project Structure
 
+---
 did-decast-frontend/
 ├── public/
 │   └── index.html
@@ -52,7 +53,7 @@ did-decast-frontend/
 ├── package.json
 ├── vite.config.js
 └── README.md
-
+---
 
 ## Prerequisites
 
