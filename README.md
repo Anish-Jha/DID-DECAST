@@ -34,28 +34,31 @@ A Vue.js-based frontend for managing **Decentralized Identifiers (DIDs)** in the
 
 ## 📁 Project Structure
 
----
 
-did-decast-frontend/
+```
+did-decast/
 ├── public/
-│   └── index.html
+│ └── index.html
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── KeyManager.vue      # Key pair generation, restoration, backup, deletion
-│   │   ├── DidSelector.vue     # DID selection with search and metadata
-│   │   ├── Register.vue        # DID registration with status checking
-│   │   ├── Login.vue           # Login with signed challenge and session management
-│   │   ├── ResponseDisplay.vue  # Action response history with filtering
-│   ├── mockBackend.js          # Mock API for testing
-│   ├── App.vue                 # Main app with tabbed interface and modals
-│   ├── main.js                 # Entry point
-│   └── style.css               # Custom styles
+│ ├── assets/
+│ ├── components/
+│ │ ├── KeyManager.vue # Key pair generation & backup
+│ │ ├── DidSelector.vue # DID search & selection
+│ │ ├── Register.vue # Register DID
+│ │ ├── Login.vue # Login with DID signature
+│ │ ├── ResponseDisplay.vue # Logs of previous actions
+│ ├── mockBackend.js # Simulated backend logic
+│ ├── views/ # Routed pages per feature
+│ ├── App.vue # Root layout with nav
+│ ├── main.js # Entry point
+│ └── style.css # Global styles
+├── router/
+│ └── index.js # Vue Router setup
 ├── package.json
 ├── vite.config.js
 └── README.md
 
----
+```
 
 ## Prerequisites
 
@@ -68,7 +71,7 @@ did-decast-frontend/
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/your-username/did-decast-frontend.git
-   cd did-decast
+   cd did-decast-frontend
 
 ```sh
 npm install
