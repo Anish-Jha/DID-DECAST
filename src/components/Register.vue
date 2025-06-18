@@ -22,6 +22,10 @@ import { mockBackend } from '../mockBackend';
 export default {
     props: {
         selectedDid: String,
+        userId: {
+            type: String,
+            required: true
+        }
     },
     data() {
         return {
@@ -48,8 +52,11 @@ export default {
             this.isLoading = true;
             try {
                 // Replace with real endpoint: http://localhost:3000/api/v1/dids/:did/status
-                const res = await mockBackend.getDidStatus(this.selectedDid);
-                this.isRegistered = res.isRegistered;
+                // const res = await mockBackend.getDidStatus(this.selectedDid);
+                // this.isRegistered = res.isRegistered;
+                await axios.get(`https://did.decast.live/api/v1/dids/resolver/${this.selectedDid}`);
+                this.isRegistered = true;
+
             } catch (error) {
                 this.$emit('response', `Error checking DID status: ${error.message}`);
             } finally {
@@ -70,30 +77,39 @@ export default {
                     return;
                 }
 
-                const publicKey = bs58.decode(keyPair.publicKey);
                 const didDocument = {
                     '@context': 'https://www.w3.org/ns/did/v1',
                     id: this.selectedDid,
-                    verificationMethod: [
-                        {
-                            id: `${this.selectedDid}#keys-1`,
-                            type: 'Ed25519VerificationKey2018',
-                            controller: this.selectedDid,
-                            publicKeyBase58: keyPair.publicKey,
-                        },
-                    ],
-                    authentication: [`${this.selectedDid}#keys-1`],
+                    verificationMethod: [{
+                        id: `${this.selectedDid}#keys-1`,
+                        type: 'Ed25519VerificationKey2018',
+                        controller: this.selectedDid,
+                        publicKeyBase58: keyPair.publicKey,
+                    }],
+                    // authentication: [`${this.selectedDid}#keys-1`],
                 };
 
-                // Replace with real endpoint: http://localhost:3000/api/v1/dids/register
-                const res = await mockBackend.registerDid(this.selectedDid, didDocument);
-                this.registerResponse = JSON.stringify(res, null, 2);
+                const payload = {
+                    did: this.selectedDid,
+                    didDocument,
+                    user: { id: '0' }
+                };
+                const { data } = await axios.post(
+                    'https://did.decast.live/api/v1/dids/register',
+                    payload, {
+                    headers: {
+                        Authorization: `Bearer ory_at_cwKzxQVhSjsIWTbL6fqOLzGrhv7vfG-Ue5aIElW8sGI.wY6ySO6rAj_UKuYhAuG9X4DljGgyO9bGdsFIMiyN6uU`
+                    }
+                }
+                );
+                this.registerResponse = JSON.stringify(data, null, 2);
                 this.isRegistered = true;
                 this.$emit('response', 'DID registered successfully!');
-                this.$emit('registered', true); 
+                this.$emit('registered', true);
             } catch (error) {
-                this.$emit('response', `Error registering DID: ${error.message}`);
-                this.registerResponse = error.message;
+                const msg = error.response?.data?.message || error.message;
+                this.$emit('response', `Error registering DID: ${msg}`);
+                this.registerResponse = msg;
             } finally {
                 this.isLoading = false;
             }
